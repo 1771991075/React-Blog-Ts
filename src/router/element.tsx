@@ -6,6 +6,9 @@ const Index = lazy(()=>import('../view/Index'));
 const Login = lazy(()=>import('../view/Login'));
 const Home = lazy(()=>import('../view/Home'));
 const Blog = lazy(()=>import('../view/Blog'));
+const Admin = lazy(()=>import('../view/Admin/Index'));
+const AdminHome = lazy(()=>import('../view/Admin/Home'));
+const AddBlog = lazy(()=>import('../view/Admin/AddBlog'));
 
 const element:RouterObject[] = [
     {
@@ -21,6 +24,23 @@ const element:RouterObject[] = [
             {
                 path:'blog',
                 element:<Suspense fallback={<Loading/>}><Blog /></Suspense>,
+                author:false
+            },
+        ]
+    },
+    {
+        path: '/admin',
+        element: <Suspense fallback={<Loading/>}><Admin /></Suspense>,
+        author: false,
+        children:[
+            {
+                path:'home',
+                element:<Suspense fallback={<Loading/>}><AdminHome /></Suspense>,
+                author:false
+            },
+            {
+                path:'addblog',
+                element:<Suspense fallback={<Loading/>}><AddBlog /></Suspense>,
                 author:false
             },
         ]
