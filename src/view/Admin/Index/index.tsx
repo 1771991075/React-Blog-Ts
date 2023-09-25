@@ -5,9 +5,13 @@ import {
     FileAddOutlined,
     HomeOutlined,
     BarsOutlined,
+    UserOutlined,
+    SettingOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Button, theme, Breadcrumb } from 'antd';
+import { Layout, Menu, Button, theme, Breadcrumb, Avatar } from 'antd';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { LogoutOutlined  } from '@ant-design/icons';
+import './index.scss';
 
 const { Header, Sider, Content } = Layout;
 const adminNavList = [
@@ -25,6 +29,16 @@ const adminNavList = [
         key: '/admin/bloglist',
         icon: <BarsOutlined />,
         label: '博客列表',
+    },
+    {
+        key: '/admin/oneself',
+        icon: <UserOutlined />,
+        label: '个人中心',
+    },
+    {
+        key: '/admin/setting',
+        icon: <SettingOutlined />,
+        label: '设置',
     },
 ]
 
@@ -45,7 +59,10 @@ const Admin: React.FC = () => {
     return (
         <Layout style={{ height:'100vh' }} >
             <Sider trigger={null} collapsible collapsed={collapsed}>
-                <div className="demo-logo-vertical" />
+                <div className="demo-logo-vertical" >
+                    <Avatar shape="square" size={64} src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
+                    <p style={{ display: collapsed ? 'none' : '' }}>欢迎回来！</p>
+                </div>
                 <Menu
                     theme="dark"
                     mode="inline"
@@ -55,8 +72,9 @@ const Admin: React.FC = () => {
                 />
             </Sider>
             <Layout>
-                <Header style={{ padding: 0, background: colorBgContainer }}>
+                <Header className='header' style={{ background: colorBgContainer }}>
                     <Button
+                        className='exitBtn'
                         type="text"
                         icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
                         onClick={() => setCollapsed(!collapsed)}
@@ -66,6 +84,7 @@ const Admin: React.FC = () => {
                             height: 64,
                         }}
                     />
+                    <Button type="primary" icon={<LogoutOutlined />} shape="default">退出</Button>
                 </Header>
                 <Breadcrumb
                     style={{ margin: '10px 20px 0px 20px' }}
@@ -85,14 +104,8 @@ const Admin: React.FC = () => {
                     ]}
                 />
                 <Content
-                    style={{
-                        margin: '10px 16px 20px 16px',
-                        maxHeight: 'calc(100vh - 60px)',
-                        overflowY: 'scroll',
-                        padding: 24,
-                        minHeight: 280,
-                        background: colorBgContainer,
-                    }}
+                    className='content'
+                    style={{ background: colorBgContainer }}
                 >
                     <Outlet></Outlet>
                 </Content>
