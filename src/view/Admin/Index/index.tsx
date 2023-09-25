@@ -43,7 +43,7 @@ const Admin: React.FC = () => {
     }, [location])
 
     return (
-        <Layout style={{ height:'100vh' }}>
+        <Layout style={{ height:'100vh' }} >
             <Sider trigger={null} collapsible collapsed={collapsed}>
                 <div className="demo-logo-vertical" />
                 <Menu
@@ -87,6 +87,8 @@ const Admin: React.FC = () => {
                 <Content
                     style={{
                         margin: '10px 16px 20px 16px',
+                        maxHeight: 'calc(100vh - 60px)',
+                        overflowY: 'scroll',
                         padding: 24,
                         minHeight: 280,
                         background: colorBgContainer,

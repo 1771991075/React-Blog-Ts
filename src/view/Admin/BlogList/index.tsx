@@ -1,35 +1,57 @@
-import React from 'react';
-import { Table, Button } from 'antd';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Table, Button, Tag, Pagination } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 interface DataType {
-    key: React.Key;
-    name: string;
-    age: number;
-    address: string;
+    key: string;
+    title: string;
+    category: string;
+    tag: string[];
+    createTime: string;
+    updateTime: string;
 }
 const columns: ColumnsType<DataType> = [
     {
-        title: 'Full Name',
-        width: 100,
-        dataIndex: 'name',
-        key: 'name',
+        title: '博客标题',
+        width: 150,
+        dataIndex: 'title',
+        key: 'title',
         fixed: 'left',
     },
     {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
+        title: '类别',
+        dataIndex: 'category',
+        key: 'category',
     },
-    { title: 'Column 1', dataIndex: 'address', key: '1' },
-    { title: 'Column 2', dataIndex: 'address', key: '2' },
-    { title: 'Column 3', dataIndex: 'address', key: '3' },
-    { title: 'Column 4', dataIndex: 'address', key: '4' },
-    { title: 'Column 5', dataIndex: 'address', key: '5' },
-    { title: 'Column 6', dataIndex: 'address', key: '6' },
-    { title: 'Column 7', dataIndex: 'address', key: '7' },
-    { title: 'Column 8', dataIndex: 'address', key: '8' },
+    {
+        title: '标签',
+        dataIndex: 'tag',
+        key: 'tag',
+        render: (val) => {
+            return (
+                <Fragment>
+                    {val.map((item: string, index: number) => {
+                        return (
+                            <Fragment key={index}>
+                                <Tag color="magenta">{item}</Tag>
+                            </Fragment>
+                        )
+                    })}
+                </Fragment>
+            )
+        },
+    },
+    {
+        title: '创建时间',
+        dataIndex: 'createTime',
+        key: 'createTime',
+    },
+    {
+        title: '更新时间',
+        dataIndex: 'updateTime',
+        key: 'updateTime',
+    },
     {
         title: 'Action',
         key: 'operation',
@@ -37,9 +59,9 @@ const columns: ColumnsType<DataType> = [
         width: 250,
         render: () => {
             return (
-                <span style={{ display:'flex', justifyContent:'space-around' }}>
+                <span style={{ display: 'flex', justifyContent: 'space-around' }}>
                     <Button type="primary" icon={<SearchOutlined />} size='small' shape="default">查看</Button>
-                    <Button type="primary" style={{ backgroundColor:'#EFAE2A' }} icon={<EditOutlined />} size='small' shape="default">编辑</Button>
+                    <Button type="primary" style={{ backgroundColor: '#EFAE2A' }} icon={<EditOutlined />} size='small' shape="default">编辑</Button>
                     <Button type="primary" danger icon={<DeleteOutlined />} size='small' shape="default">删除</Button>
                 </span>
             )
@@ -50,22 +72,40 @@ const columns: ColumnsType<DataType> = [
 const data: DataType[] = [
     {
         key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York Park',
+        title: 'Linux',
+        category: 'linux',
+        tag: ['linux'],
+        createTime: '2023-09-09 12:00:00',
+        updateTime: '2023-09-09 12:00:00',
     },
     {
         key: '2',
-        name: 'Jim Green',
-        age: 40,
-        address: 'London Park',
+        title: 'react',
+        category: 'react',
+        tag: ['react','vue'],
+        createTime: '2023-09-09 12:00:00',
+        updateTime: '2023-09-09 12:00:00',
     },
 ];
 
 const AdminBlogList: React.FC = () => {
+
+    const [loading, setLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        setLoading(false);
+    }, [])
+
     return (
         <div>
-            <Table columns={columns} dataSource={data} scroll={{ x: 1300 }} />
+            <Table columns={columns} bordered loading={loading} dataSource={data} scroll={{ x: 1300 }} pagination={false} />
+            <Pagination
+                style={{ margin:'20px', display:'flex', justifyContent:'center' }}
+                total={85}
+                showSizeChanger
+                showQuickJumper
+                showTotal={(total) => `Total ${total} items`}
+            />
         </div>
     )
 }
