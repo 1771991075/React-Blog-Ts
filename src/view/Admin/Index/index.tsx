@@ -1,46 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
-    UploadOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
+    FileAddOutlined,
+    HomeOutlined,
+    BarsOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Button, theme } from 'antd';
+import { Layout, Menu, Button, theme, Breadcrumb } from 'antd';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 
 const { Header, Sider, Content } = Layout;
+const adminNavList = [
+    {
+        key: '/admin/home',
+        icon: <HomeOutlined />,
+        label: '首页',
+    },
+    {
+        key: '/admin/addblog',
+        icon: <FileAddOutlined />,
+        label: '新增博客',
+    },
+    {
+        key: '/admin/bloglist',
+        icon: <BarsOutlined />,
+        label: '博客列表',
+    },
+]
 
 const Admin: React.FC = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
     const [collapsed, setCollapsed] = useState(false);
-    const {
-        token: { colorBgContainer },
-    } = theme.useToken();
+    const { token: { colorBgContainer } } = theme.useToken();
+    //定义默认展开的一级菜单key列表
+    let [defaultOpenKeys, setDefaultOpenKeys] = useState('/admin/home');
+
+    useEffect(() => {
+        // 获取当前路由路径
+        let pathName = location.pathname;
+        setDefaultOpenKeys(pathName);
+    }, [location])
 
     return (
-        <Layout>
+        <Layout style={{ height:'100vh' }}>
             <Sider trigger={null} collapsible collapsed={collapsed}>
                 <div className="demo-logo-vertical" />
                 <Menu
                     theme="dark"
                     mode="inline"
-                    defaultSelectedKeys={['1']}
-                    items={[
-                        {
-                            key: '1',
-                            icon: <UserOutlined />,
-                            label: 'nav 1',
-                        },
-                        {
-                            key: '2',
-                            icon: <VideoCameraOutlined />,
-                            label: 'nav 2',
-                        },
-                        {
-                            key: '3',
-                            icon: <UploadOutlined />,
-                            label: 'nav 3',
-                        },
-                    ]}
+                    selectedKeys={[defaultOpenKeys]}
+                    onClick={(obj) => { navigate(obj.key) }}
+                    items={adminNavList}
                 />
             </Sider>
             <Layout>
@@ -56,15 +67,32 @@ const Admin: React.FC = () => {
                         }}
                     />
                 </Header>
+                <Breadcrumb
+                    style={{ margin: '10px 20px 0px 20px' }}
+                    items={[
+                        {
+                            href: '/admin/home',
+                            title: <HomeOutlined />,
+                        },
+                        {
+                            href: defaultOpenKeys,
+                            title: (
+                            <>
+                                <span>{ (adminNavList.find((item:any)=>item.key === defaultOpenKeys) as any).label }</span>
+                            </>
+                            ),
+                        }
+                    ]}
+                />
                 <Content
                     style={{
-                        margin: '24px 16px',
+                        margin: '10px 16px 20px 16px',
                         padding: 24,
                         minHeight: 280,
                         background: colorBgContainer,
                     }}
                 >
-                    Content
+                    <Outlet></Outlet>
                 </Content>
             </Layout>
         </Layout>

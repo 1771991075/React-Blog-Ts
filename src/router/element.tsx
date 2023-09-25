@@ -8,7 +8,8 @@ const Home = lazy(()=>import('../view/Home'));
 const Blog = lazy(()=>import('../view/Blog'));
 const Admin = lazy(()=>import('../view/Admin/Index'));
 const AdminHome = lazy(()=>import('../view/Admin/Home'));
-const AddBlog = lazy(()=>import('../view/Admin/AddBlog'));
+const AdminAddBlog = lazy(()=>import('../view/Admin/AddBlog'));
+const AdminBlogList = lazy(()=>import('../view/Admin/BlogList'));
 
 const element:RouterObject[] = [
     {
@@ -40,7 +41,12 @@ const element:RouterObject[] = [
             },
             {
                 path:'addblog',
-                element:<Suspense fallback={<Loading/>}><AddBlog /></Suspense>,
+                element:<Suspense fallback={<Loading/>}><AdminAddBlog /></Suspense>,
+                author:false
+            },
+            {
+                path:'bloglist',
+                element:<Suspense fallback={<Loading/>}><AdminBlogList /></Suspense>,
                 author:false
             },
         ]

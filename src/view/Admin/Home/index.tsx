@@ -1,7 +1,8 @@
 import React from 'react';
 
-export default function AdminHome() {
+const AdminHome: React.FC = () => {
     return (
         <div>AdminHome</div>
     )
 }
+export default AdminHome;
