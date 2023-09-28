@@ -23,7 +23,7 @@ function GoodsContent(props: any, ref: any) {
     })
 
     return (
-        <div id='box' style={{ width: '100%', minHeight: '400px' }}>
+        <div id='box' style={{ width: '100%', minHeight: '400px', marginTop:'10px' }}>
 
         </div>
     )

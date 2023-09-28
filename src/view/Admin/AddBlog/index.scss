@@ -1,0 +1,28 @@
+.addblog{
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    .blogitemall{
+        width: 600px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: auto;
+        .blogitem{
+            width: 100%;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            margin: 5px 0px;
+            .span{
+                width: 80px;
+            }
+        }
+    }
+    .btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
