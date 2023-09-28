@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
-import GoodsContent from './components/blogContent';
+import React, { useState, useRef, Fragment } from 'react';
+import { Button, message, Steps, theme, Form, Input } from 'antd';
+import BlogContent from './components/blogContent';
 
 type FieldType = {
     username?: string;
@@ -8,17 +8,12 @@ type FieldType = {
 };
 
 const AdminAddBlog: React.FC = () => {
-
-    //博客内容富文本标签
-    let contentRef:{current:any} = useRef();
-
+    const { token } = theme.useToken();
+    const [current, setCurrent] = useState(0);
+    // 提交表单
     const onFinish = (values: any) => {
         console.log('Success:', values);
-        let goods_introduce = contentRef.current.myEditor.txt.html();
-        console.log(goods_introduce);
-        
     };
-
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
@@ -29,25 +24,40 @@ const AdminAddBlog: React.FC = () => {
                 name="basic"
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
-                style={{ width: 600 }}
+                style={{ maxWidth: 600 }}
+                initialValues={{ remember: true }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
-                <Form.Item<FieldType>
-                    label="Username"
-                    name="username"
-                    rules={[{ required: true, message: 'Please input your username!' }]}
+                <Form.Item
+                    label="博客标题"
+                    name="title"
+                    rules={[{ required: true }]}
                 >
                     <Input />
                 </Form.Item>
-
-                <Form.Item<FieldType>
-                    label="Password"
-                    name="password"
-                    rules={[{ required: true, message: 'Please input your password!' }]}
+                <Form.Item
+                    label="博客类别"
+                    name="category"
+                    rules={[{ required: true }]}
                 >
-                    <Input.Password />
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    label="博客概述"
+                    name="summary"
+                    rules={[{ required: true }]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    label="博客标签"
+                    rules={[{ required: true }]}
+                >
+                    <Fragment>
+                        
+                    </Fragment>
                 </Form.Item>
 
                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -56,8 +66,8 @@ const AdminAddBlog: React.FC = () => {
                     </Button>
                 </Form.Item>
             </Form>
-            <GoodsContent ref={contentRef}/>
         </div>
-    )
-}
+    );
+};
+
 export default AdminAddBlog;
