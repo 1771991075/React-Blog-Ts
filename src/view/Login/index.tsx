@@ -30,16 +30,16 @@ export default function Login() {
         if (res.data.code === 200 && res.data.msg === '登录成功') {
             message.success(res.data.msg)
             // 登录成功将 token 存储到本地
-            localStorage.setItem("token", res.data.data.token);
+            localStorage.setItem("token", res.data.token);
             localStorage.setItem("username", res.data.data.username);
             // 提交actions更改redux中存储的token username
             disPatch(userActions({
                 username: res.data.data.username,
-                token: res.data.data.token
+                token: res.data.token
             }))
             setTimeout(() => {
-                navigate("/admin")
-            }, 1000);
+                navigate("/admin/home")
+            }, 500);
             return
         }
         message.error(res.data.msg)

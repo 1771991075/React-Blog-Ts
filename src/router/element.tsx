@@ -32,22 +32,22 @@ const element:RouterObject[] = [
     {
         path: '/admin',
         element: <Suspense fallback={<Loading/>}><Admin /></Suspense>,
-        author: false,
+        author: true,
         children:[
             {
                 path:'home',
                 element:<Suspense fallback={<Loading/>}><AdminHome /></Suspense>,
-                author:false
+                author:true
             },
             {
                 path:'addblog',
                 element:<Suspense fallback={<Loading/>}><AdminAddBlog /></Suspense>,
-                author:false
+                author:true
             },
             {
                 path:'bloglist',
                 element:<Suspense fallback={<Loading/>}><AdminBlogList /></Suspense>,
-                author:false
+                author:true
             },
         ]
     },

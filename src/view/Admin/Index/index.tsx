@@ -11,6 +11,7 @@ import {
 import { Layout, Menu, Button, theme, Breadcrumb, Avatar } from 'antd';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { LogoutOutlined  } from '@ant-design/icons';
+import showModal from '../../../component/Modal';
 import './index.scss';
 
 const { Header, Sider, Content } = Layout;
@@ -50,6 +51,14 @@ const Admin: React.FC = () => {
     //定义默认展开的一级菜单key列表
     let [defaultOpenKeys, setDefaultOpenKeys] = useState('/admin/home');
 
+    // 退出登录
+    const exit = () => {
+        showModal('提示:','您确定要退出吗?',function(){
+            localStorage.removeItem('token')
+            navigate('/login')
+        },function(){})
+    }
+
     useEffect(() => {
         // 获取当前路由路径
         let pathName = location.pathname;
@@ -84,7 +93,7 @@ const Admin: React.FC = () => {
                             height: 64,
                         }}
                     />
-                    <Button type="primary" icon={<LogoutOutlined />} shape="default">退出</Button>
+                    <Button type="primary" icon={<LogoutOutlined />} shape="default" onClick={exit}>退出</Button>
                 </Header>
                 <Breadcrumb
                     style={{ margin: '10px 20px 0px 20px' }}

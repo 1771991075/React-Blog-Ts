@@ -1,7 +1,7 @@
 import axios ,{AxiosHeaders} from 'axios';
 import store from '../redux';
 import {message} from 'antd';
-axios.defaults.baseURL = 'http://106.12.150.223:8090/api/private/v1/';
+axios.defaults.baseURL = '/blog';
 axios.defaults.timeout = 10000;
 
 //请求拦截
@@ -15,13 +15,15 @@ axios.interceptors.request.use((config:any)=>{
 
 //响应拦截
 axios.interceptors.response.use((res:any)=>{
-    if(res.data.meta.status === 401 || res.data.meta.status === 400){
+    console.log('*****',res);
+    
+    if(res.data.code === 401 || res.data.code === 400){
         window.location.href = '#/login'
-        message.error(res.data.meta.msg)
+        message.error(res.data.msg)
         return
     }
-    if(res.data.meta.status !== 200 && res.data.meta.status !== 201 && res.data.meta.status !== 204){
-        message.error(res.data.meta.msg)
+    if(res.data.code !== 200 && res.data.code !== 201 && res.data.code !== 204){
+        message.error(res.data.msg)
         return 
     }
     return res
