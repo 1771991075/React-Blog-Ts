@@ -5,6 +5,8 @@ import type { RadioChangeEvent } from 'antd';
 import type { DatePickerProps } from 'antd';
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import './index.scss';
+import { nanoid } from 'nanoid';
+import moment from 'moment';
 
 type BlogTagType = {
     value: string;
@@ -15,6 +17,7 @@ type BlogCategoryType = {
     label: string;
 }
 type BlogInfoType = {
+    id?: string;
     title: string;
     category: string;
     summary: string;
@@ -42,7 +45,7 @@ const AdminAddBlog: React.FC = () => {
     //博客内容富文本标签
     let contentRef: { current: any } = useRef();
     // 选择类别还是新增类别
-    const onChange = (e: RadioChangeEvent) => {
+    const onChangeCategory = (e: RadioChangeEvent) => {
         setCategoryType(e.target.value);
     };
     // 选择类别
@@ -79,6 +82,9 @@ const AdminAddBlog: React.FC = () => {
         let blogContent = contentRef.current.myEditor.txt.html();
         blogInfo.content = blogContent;
         console.log(blogInfo);
+        blogInfo.id = nanoid();
+        blogInfo.createTime = moment().format('YYYY-MM-DD HH:mm:ss');
+        blogInfo.updateTime = moment().format('YYYY-MM-DD HH:mm:ss');
         message.success('发表成功!');
         setLoading(false);
     };
@@ -105,7 +111,7 @@ const AdminAddBlog: React.FC = () => {
                 </div>
                 <div className='blogitem'>
                     <span className='span'>博客类别:</span>
-                    <Radio.Group onChange={onChange} value={categoryType}>
+                    <Radio.Group onChange={onChangeCategory} value={categoryType}>
                         <Radio value={0}>选择类别</Radio>
                         <Radio value={1}>新增类别</Radio>
                     </Radio.Group>
