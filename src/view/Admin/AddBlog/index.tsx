@@ -9,6 +9,7 @@ import { nanoid } from 'nanoid';
 import moment from 'moment';
 
 type BlogTagType = {
+    id: string;
     value: string;
     color: string;
 }
@@ -33,7 +34,7 @@ const AdminAddBlog: React.FC = () => {
         category: '',
         summary: '',
         tag: [
-            { value: '', color: '#1677FF' }
+            { id: '', value: '', color: '#1677FF' }
         ],
         content: '',
         createTime: '',
@@ -55,20 +56,23 @@ const AdminAddBlog: React.FC = () => {
         setBlogInfo(data);
     };
     // 增加标签
-    const addTag = (index: number) => {
+    const addTag = (id: string) => {
         let data = JSON.parse(JSON.stringify(blogInfo));
-        data.tag.splice(index, 0, { value: '', color: '#1677FF' });
+        let idx = data.tag.findIndex((item: BlogTagType) => item.id === id);
+        data.tag.splice(idx + 1, 0, { id: nanoid(), value: '', color: '#1677FF' });
         setBlogInfo(data);
     }
     // 删除标签
-    const delTag = (index: number) => {
+    const delTag = (id: string) => {
         let data = JSON.parse(JSON.stringify(blogInfo));
-        data.tag.splice(index, 1);
+        let idx = data.tag.findIndex((item: BlogTagType) => item.id === id);
+        data.tag.splice(idx, 1);
         setBlogInfo(data);
     }
     // 选取颜色
-    const changeColor = (color: any, index: number) => {
-        blogInfo.tag[index].color = color.toHexString();
+    const changeColor = (color: any, id: string) => {
+        let idx = blogInfo.tag.findIndex((item: BlogTagType) => item.id === id);
+        blogInfo.tag[idx].color = color.toHexString();
     }
     // 发表时间
     const onChangeTime: DatePickerProps['onChange'] = (date, dateString) => {
@@ -90,6 +94,7 @@ const AdminAddBlog: React.FC = () => {
     };
 
     useEffect(() => {
+        blogInfo.tag[0].id = nanoid();
         setCategoryOptions([
             { label: '类别1', value: 'category1' },
             { label: '类别2', value: 'category2' },
@@ -140,23 +145,23 @@ const AdminAddBlog: React.FC = () => {
                 {
                     blogInfo.tag.length !== 0 && blogInfo.tag.map((item: BlogTagType, index: number) => {
                         return (
-                            <div className='blogitem' key={index}>
+                            <div className='blogitem' key={item.id}>
                                 <span className='span'>博客标签:</span>
                                 <Input className='input' value={item.value} onChange={(e) => {
                                     let data = JSON.parse(JSON.stringify(blogInfo));
                                     data.tag[index].value = e.target.value;
                                     setBlogInfo(data);
                                 }} placeholder="请输入标签名称" style={{ width: '200px' }} />
-                                <ColorPicker onChange={(color) => changeColor(color, index)} placement='top' allowClear style={{ margin: '0px 10px' }} />
-                                <Button disabled={blogInfo.tag.length >= 5} onClick={() => { addTag(index) }} shape="circle" icon={<PlusOutlined />} style={{ margin: '0px 10px 0px 0px' }}></Button>
-                                <Button disabled={blogInfo.tag.length === 1} onClick={() => { delTag(index) }} type='primary' shape="circle" icon={<DeleteOutlined />} danger></Button>
+                                <ColorPicker onChange={(color) => changeColor(color, item.id)} placement='top' allowClear style={{ margin: '0px 10px' }} />
+                                <Button disabled={blogInfo.tag.length >= 5} onClick={() => { addTag(item.id) }} shape="circle" icon={<PlusOutlined />} style={{ margin: '0px 10px 0px 0px' }}></Button>
+                                <Button disabled={blogInfo.tag.length === 1} onClick={() => { delTag(item.id) }} type='primary' shape="circle" icon={<DeleteOutlined />} danger></Button>
                             </div>
                         )
                     })
                 }
                 <div className='blogitem'>
                     <span className='span'>发表时间:</span>
-                    <DatePicker onChange={onChangeTime} style={{ width: '200px' }}/>
+                    <DatePicker onChange={onChangeTime} style={{ width: '200px' }} />
                 </div>
             </div>
             <BlogContent ref={contentRef} />
