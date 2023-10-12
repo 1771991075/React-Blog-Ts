@@ -10,6 +10,7 @@ const Admin = lazy(()=>import('../view/Admin/Index'));
 const AdminHome = lazy(()=>import('../view/Admin/Home'));
 const AdminAddBlog = lazy(()=>import('../view/Admin/AddBlog'));
 const AdminBlogList = lazy(()=>import('../view/Admin/BlogList'));
+const AdminCategoryList = lazy(()=>import('../view/Admin/CategoryList'));
 
 const element:RouterObject[] = [
     {
@@ -47,6 +48,11 @@ const element:RouterObject[] = [
             {
                 path:'bloglist',
                 element:<Suspense fallback={<Loading/>}><AdminBlogList /></Suspense>,
+                author:true
+            },
+            {
+                path:'categorylist',
+                element:<Suspense fallback={<Loading/>}><AdminCategoryList /></Suspense>,
                 author:true
             },
         ]

@@ -7,10 +7,11 @@ import {
     BarsOutlined,
     UserOutlined,
     SettingOutlined,
+    AppstoreOutlined,
+    LogoutOutlined
 } from '@ant-design/icons';
 import { Layout, Menu, Button, theme, Breadcrumb, Avatar } from 'antd';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { LogoutOutlined  } from '@ant-design/icons';
 import showModal from '../../../component/Modal';
 import './index.scss';
 
@@ -30,6 +31,11 @@ const adminNavList = [
         key: '/admin/bloglist',
         icon: <BarsOutlined />,
         label: '博客列表',
+    },
+    {
+        key: '/admin/categorylist',
+        icon: <AppstoreOutlined />,
+        label: '分类管理',
     },
     {
         key: '/admin/oneself',

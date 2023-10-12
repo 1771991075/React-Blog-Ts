@@ -54,7 +54,7 @@ const columns: ColumnsType<DataType> = [
         key: 'updateTime',
     },
     {
-        title: 'Action',
+        title: '操作',
         key: 'operation',
         fixed: 'right',
         width: 250,
