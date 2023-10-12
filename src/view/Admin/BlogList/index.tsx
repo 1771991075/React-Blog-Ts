@@ -1,7 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { Table, Button, Tag, Pagination } from 'antd';
+import { Table, Button, Tag, Pagination, Input } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import './index.scss';
 
 interface DataType {
     key: string;
@@ -88,9 +89,16 @@ const data: DataType[] = [
     },
 ];
 
+const { Search } = Input;
+
 const AdminBlogList: React.FC = () => {
 
     const [loading, setLoading] = useState<boolean>(true);
+
+    // 搜索框查询
+    const onSearch = (value:string) => {
+        console.log(value);
+    }
 
     useEffect(() => {
         setLoading(false);
@@ -98,6 +106,7 @@ const AdminBlogList: React.FC = () => {
 
     return (
         <div>
+            <Search className='search' placeholder="请输入关键字" onSearch={onSearch} enterButton />
             <Table columns={columns} bordered loading={loading} dataSource={data} scroll={{ x: 1300 }} pagination={false} />
             <Pagination
                 style={{ margin:'20px', display:'flex', justifyContent:'center' }}
