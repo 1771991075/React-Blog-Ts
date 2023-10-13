@@ -6,6 +6,8 @@ const Index = lazy(()=>import('../view/Index'));
 const Login = lazy(()=>import('../view/Login'));
 const Home = lazy(()=>import('../view/Home'));
 const Blog = lazy(()=>import('../view/Blog'));
+const About = lazy(()=>import('../view/Visitor/About'));
+const Feedback = lazy(()=>import('../view/Visitor/Feedback'));
 const Admin = lazy(()=>import('../view/Admin/Index'));
 const AdminHome = lazy(()=>import('../view/Admin/Home'));
 const AdminAddBlog = lazy(()=>import('../view/Admin/AddBlog'));
@@ -26,6 +28,16 @@ const element:RouterObject[] = [
             {
                 path:'blog',
                 element:<Suspense fallback={<Loading/>}><Blog /></Suspense>,
+                author:false
+            },
+            {
+                path:'about',
+                element:<Suspense fallback={<Loading/>}><About /></Suspense>,
+                author:false
+            },
+            {
+                path:'feedback',
+                element:<Suspense fallback={<Loading/>}><Feedback /></Suspense>,
                 author:false
             },
         ]
