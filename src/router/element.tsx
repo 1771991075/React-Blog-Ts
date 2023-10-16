@@ -13,6 +13,8 @@ const AdminHome = lazy(()=>import('../view/Admin/Home'));
 const AdminAddBlog = lazy(()=>import('../view/Admin/AddBlog'));
 const AdminBlogList = lazy(()=>import('../view/Admin/BlogList'));
 const AdminCategoryList = lazy(()=>import('../view/Admin/CategoryList'));
+const AdminOneself = lazy(()=>import('../view/Admin/Oneself'));
+const AdminSetting = lazy(()=>import('../view/Admin/Setting'));
 
 const element:RouterObject[] = [
     {
@@ -65,6 +67,16 @@ const element:RouterObject[] = [
             {
                 path:'categorylist',
                 element:<Suspense fallback={<Loading/>}><AdminCategoryList /></Suspense>,
+                author:true
+            },
+            {
+                path:'oneself',
+                element:<Suspense fallback={<Loading/>}><AdminOneself /></Suspense>,
+                author:true
+            },
+            {
+                path:'setting',
+                element:<Suspense fallback={<Loading/>}><AdminSetting /></Suspense>,
                 author:true
             },
         ]
